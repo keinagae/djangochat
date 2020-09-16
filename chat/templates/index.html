@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    {% for uuser in users %}
+        {% if user.pk == uuser.pk %}
+            <li><a href="#">{{ uuser.username }} </a> (You)</li>
+        {% else %}
+            <li><a href="{% url 'chat:room' room=uuser.pk %}">{{ uuser.username }} </a></li>
+        {% endif %}
+
+    {% endfor %}
+
+
+</ul>
+<script>
+
+</script>
+</body>
+</html>
