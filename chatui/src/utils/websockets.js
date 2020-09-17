@@ -17,6 +17,7 @@ class WebSocketService {
         this.socketRef = new WebSocket(url)
         this.socketRef.onopen = (e) => {
             console.log(e)
+            console.log("socket open at" ,url)
         }
         this.socketRef.onmessage = e => {
             this.receiveMessage(e.data,dispatch)
@@ -39,7 +40,6 @@ class WebSocketService {
 
     receiveMessage(data,dispatch) {
         const parsedData = JSON.parse(data)
-        console.log(parsedData)
         dispatch("receiveMessage",parsedData)
         return parsedData
     }

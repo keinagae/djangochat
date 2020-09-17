@@ -47,18 +47,28 @@ class ChatWebsocketConsumer(AsyncJsonWebsocketConsumer):
                 'message': response
             }
         )
+        await self.notify_others()
+
+
+    async def notify_others(self):
+        users=await self.get_other_users()
+        for user in users:
+            print(f"user__{user.pk}")
+            await self.channel_layer.group_send(
+                f"user__{user.pk}",
+                {
+                    'type': 'message_received',
+                    'message': 'dfsfsdf'
+                }
+            )
+    @database_sync_to_async
+    def get_other_users(self):
+        return list(self.conversion.participants.filter(id=self.scope['user'].pk))
     @database_sync_to_async
     def serialize(self, data):
         return MessageSerializer(data).data
 
     async def chat_message(self, event):
-        await get_channel_layer().group_send(
-            f"user__{self.scope['user'].pk}",
-            {
-                'type':'message_received',
-                'message':'dfsfsdf'
-            }
-        )
         message = event['message']
         await self.send_json(message)
 
@@ -67,6 +77,7 @@ class ChatNotify(AsyncJsonWebsocketConsumer):
     async def connect(self):
         if self.scope['user'].is_authenticated:
             user = self.scope['user']
+            print(f"user__{user.pk}")
             self.room_name = f"user__{user.pk}"
             self.channel_layer.group_add(self.room_name, self.channel_name)
             await self.accept()
