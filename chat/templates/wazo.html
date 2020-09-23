@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="call()">Make Call</button>
+<script src="https://unpkg.com/@wazo/sdk@0.33.28/dist/wazo-sdk.js"></script>
+<script>
+    Wazo.Auth.setHost("wazo.tylextech.com");
+
+    async function login(){
+         let session=await Wazo.Auth.logIn("kei@kei.com","kei123")
+        console.log(session)
+    }
+
+    login()
+    async function call(){
+        let room= await Wazo.Room.connect({extension:12345,audio:true})
+        console.log(room)
+    }
+</script>
+</body>
+</html>
