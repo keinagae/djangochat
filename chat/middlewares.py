@@ -20,7 +20,6 @@ class TokenAuthenticationMiddlewareInstance():
         user = await self.get_user()
         if user:
             self.scope['user'] = user
-            print(user,"dfsdfdsdfdds")
         inner = self.inner(self.scope)
         return await inner(receive, send)
 

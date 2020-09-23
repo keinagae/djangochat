@@ -27,9 +27,9 @@ export default {
     })
   },
   beforeUpdate() {
-    console.log(this.$refs.messages.scrollTop)
-    console.log((this.$refs.messages.scrollHeight - this.$refs.messages.offsetHeight))
-    console.log(this.$refs.messages.scrollTop === (this.$refs.messages.scrollHeight - this.$refs.messages.offsetHeight))
+    // console.log(this.$refs.messages.scrollTop)
+    // console.log((this.$refs.messages.scrollHeight - this.$refs.messages.offsetHeight))
+    // console.log(this.$refs.messages.scrollTop === (this.$refs.messages.scrollHeight - this.$refs.messages.offsetHeight))
     this.shouldScroll = Math.abs(this.$refs.messages.scrollTop - (this.$refs.messages.scrollHeight - this.$refs.messages.offsetHeight))<100
   },
   updated() {

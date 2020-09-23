@@ -11,6 +11,9 @@ django-extensions = "*"
 ptpython = "*"
 channels = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
+djoser = "*"
+channels-redis = "*"
 
 [requires]
 python_version = "3.8"
