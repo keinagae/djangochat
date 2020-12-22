@@ -6,7 +6,7 @@
     <div class="chat-box-chat-footer">
       <!--            <div class="input" data-ph="Write your message" contenteditable="true">-->
       <!--            </div>-->
-      <textarea rows="1" v-model="message" @keypress.enter="send"
+      <textarea @blur="endTyping" @focus="typing"  rows="1" v-model="activeConversion.draft" @keypress.enter="send"
                 placeholder="Write your message...">
             </textarea>
       <button class="submit" @click="send"><i class="far fa-paper-plane" aria-hidden="true"></i></button>
@@ -32,7 +32,6 @@ export default {
       recipient_id: null,
       sender_id: null,
     }),
-    message:"",
     typingData: null,
     typingTimer: null
   }),
@@ -48,36 +47,21 @@ export default {
   },
   methods: {
     send() {
-      if(this.message!==""){
-        this.$store.getters['chat/chatSocket'].sendMessage({message:this.message})
-        this.message=""
+      console.log("sending")
+      if(this.activeConversion.draft!==""){
+        this.activeConversion.sendMessage()
+        // this.$store.getters['chat/chatSocket'].sendMessage({message:this.activeConversion.draft})
+        // this.activeConversion.draft=""
       }
+    },
+    typing(){
+      this.activeConversion.typing()
+    },
+    endTyping(){
+      console.log("stopping")
+      this.activeConversion.stopTyping()
+    },
 
-    },
-    subscribePusherPrivateChannel() {
-      return this.channel
-          .listen('MessageSent', e => {
-            this.pushMessage(e.message)
-            this.typingData = false
-            this.scrollPageToLast()
-          })
-          .listenForWhisper('typing', this.whisperTypingUser)
-    },
-    whisperTypingUser(data) {
-      this.typingData = data
-
-      if (this.typingData) clearTimeout(this.typingTimer)
-
-      this.typingTimer = setTimeout(() => {
-        this.typingData = false
-      }, 3000)
-    },
-    userStartedTyping() {
-      this.channel
-          .whisper('typing', {
-            name: this.authUser.name
-          })
-    },
     scrollPageToLast() {
       console.log(document.querySelector('.chat-box-chat-messages').scrollHeight)
       console.log(document.querySelector('.chat-box-chat-messages .message:last-child'))

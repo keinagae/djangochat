@@ -1,8 +1,8 @@
 <template>
   <div ref="messages" class="chat-box-chat-messages">
     <message-item
-        v-for="message in messages"
-        :key="message.id"
+        v-for="message in conversion.messages"
+        :key="conversion.id+'chat'+message.id"
         :message="message"
     ></message-item>
   </div>
@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     ...mapGetters('chat', {
-      messages: 'messages'
+      messages: 'messages',conversion: 'activeConversion'
     })
   },
   beforeUpdate() {

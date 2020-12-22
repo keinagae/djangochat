@@ -25,7 +25,7 @@ SECRET_KEY = '9ow9)aqxu9ho6(l5x75g3*thm78^qucrevnf0@qpxs2$98+gf#'
 DEBUG = True
 CORS_ORIGIN_ALLOW_ALL = True
 ALLOWED_HOSTS = ['*']
-
+AUTH_USER_MODEL = 'user.User'
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
     'chat',
+    'user',
     'channels'
 ]
 
@@ -100,8 +101,12 @@ CHANNEL_LAYERS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'chat',
+        'USER': 'postgres',
+        'PASSWORD': 'kei123',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 

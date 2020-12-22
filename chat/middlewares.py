@@ -3,33 +3,35 @@ from urllib.parse import parse_qs
 from channels.db import database_sync_to_async
 from .models import WebsocketToken
 
-class TokenAuthenticationMiddleware():
-    def __init__(self, inner):
-        self.inner = inner
+# class TokenAuthenticationMiddleware():
+#     def __init__(self, app):
+#         self.app = app
+#
+#     def __call__(self, scope):
+#         return TokenAuthenticationMiddlewareInstance(scope, self)
 
-    def __call__(self, scope):
-        return TokenAuthenticationMiddlewareInstance(scope, self)
 
+class TokenAuthenticationMiddleware:
+    def __init__(self, app):
+        self.app = app
 
-class TokenAuthenticationMiddlewareInstance():
-    def __init__(self, scope, middleware):
-        self.scope = dict(scope)
-        self.inner = middleware.inner
-
-    async def __call__(self, receive, send):
-        user = await self.get_user()
+    async def __call__(self, scope, receive, send):
+        user = await self.get_user(scope)
+        print("checking auth")
         if user:
-            self.scope['user'] = user
-        inner = self.inner(self.scope)
-        return await inner(receive, send)
+            scope['user'] = user
+            print("authed")
+        return await self.app(scope, receive, send)
 
     @database_sync_to_async
-    def get_user(self):
+    def get_user(self,scope):
         try:
-            token = parse_qs(self.scope['query_string'].decode('utf8'))
+            token = parse_qs(scope['query_string'].decode('utf8'))
             key=token['key'][0]
+            print(token)
             try:
                 token = WebsocketToken.objects.get(key=key)
+                print(token)
                 return token.user
                 # print(token)
                 # if token:

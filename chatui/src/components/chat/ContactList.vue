@@ -4,7 +4,7 @@
             <div class="wrapper online">
                 <img class="profile-img" src="https://picsum.photos/200/300" alt=""/>
             </div>
-            <div class="name">{{ user.name }}</div>
+            <div class="name">{{ user.username }}</div>
         </div>
         <div class="chat-box-sidepanel-search">
             <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
@@ -95,9 +95,7 @@
                     sender_id: this.user.id,
                     recipient_id: selectedContact.id
                 }).then((response) => {
-                    this.selectChat(response.data.data)
                     window.bus.$emit('selectedChatChanged')
-                    this.pushChat(response.data.data)
                 })
             },
             selectContacts() {
@@ -108,9 +106,7 @@
             })
         },
         mounted() {
-            this.fetchConversions().then(response=>{
-              console.log(response)
-            })
+            this.fetchConversions()
         }
     }
 </script>

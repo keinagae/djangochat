@@ -25,7 +25,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = [
             'id',
-            'username'
+            'username',
+            'status'
         ]
 
 

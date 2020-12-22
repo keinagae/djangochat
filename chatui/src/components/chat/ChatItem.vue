@@ -1,6 +1,6 @@
 <template>
   <div class="contact" @click="chatSelected(conversion)">
-    <span class="contact-status online"></span>
+    <span :class="getStatusClass" class="contact-status"></span>
     <img src="https://picsum.photos/200/300" alt=""/>
     <div class="meta">
       <span v-if="conversion.is_group" class="name">{{ conversion.name }}</span>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "ContactItem",
@@ -20,22 +20,34 @@ export default {
       required: true
     },
   },
-  data() {
-    return {
-
+  computed: {
+    ...mapGetters('chat', {
+      token:"chatToken"
+    }),
+    getStatusClass(){
+      if( this.conversion.user.status==='online'){
+        return 'online'
+      }else{
+        return 'offline'
+      }
     }
+  },
+  data() {
+    return {}
   },
   methods: {
     chatSelected(conversion) {
       this.changeActiveConversions(conversion).then(_ => {
-        this.setConversionSocket()
+        conversion.setSocket(this.token)
+        conversion.fetchMessages()
       })
-      this.fetchMessage(conversion.id)
+
+      // this.fetchMessage(conversion.id)
     },
     ...mapActions('chat', {
       changeActiveConversions: 'changeActiveConversions',
       setConversionSocket: 'setConversionSocket',
-      fetchMessage:"fetchMessages"
+      fetchMessage: "fetchMessages"
     })
   }
 }

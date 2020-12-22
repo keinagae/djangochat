@@ -1,4 +1,4 @@
-import WebSocketInstance from "@/utils/websockets";
+
 
 export function fetchConversions({commit}) {
     return axios.get('chat/').then((response) => {
@@ -8,14 +8,7 @@ export function fetchConversions({commit}) {
 
     })
 }
-export function fetchMessages({commit},conversion) {
-    return axios.get('chat/messages/'+conversion).then((response) => {
-        commit('setMessages', response.data)
-        return response.data;
-    }).finally(() => {
 
-    })
-}
 export function fetchToken({commit}) {
     return axios.post('chat/token').then((response) => {
         commit('setToken', response.data.key)
@@ -28,6 +21,7 @@ export function fetchToken({commit}) {
 export function setConversionSocket({commit,state,dispatch}) {
     let url=`ws://127.0.0.1:8000/ws/chat/${state.activeConversion.user.id}/?key=${state.chat_token}`
     state.chatSocket.disconnect()
+    console.log(dispatch)
     state.chatSocket.connect(url,dispatch)
 }
 
@@ -38,9 +32,6 @@ export function setNotifySocket({commit,state,dispatch}) {
 }
 
 
-export function receiveMessage({commit},message){
-    commit('receiveMessage',message)
-}
 
 export function changeActiveConversions({commit},payload) {
     commit('setActiveConversion', payload)

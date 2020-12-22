@@ -17,8 +17,9 @@
 
     login()
     async function call(){
-        let room= await Wazo.Room.connect({extension:12345,audio:true})
+        let room= await Wazo.Room.connect({extension:12345,audio:true,video:true})
         console.log(room)
+        room.turnCameraOn();
     }
 </script>
 </body>

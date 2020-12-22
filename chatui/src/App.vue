@@ -15,13 +15,10 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.getters['auth/isLoggedIn'])
+    // console.log(this.$store.getters['auth/isLoggedIn'])
   },
   created() {
-   Wazo.Auth.setHost("wazo.tylextech.com");
-   this.login().then(_=>{
 
-    });
     this.$store.dispatch('auth/me').then((response) => {
       this.$router.replace(
           {name: "Home"}
