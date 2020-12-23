@@ -42,9 +42,9 @@ export default {
   mounted() {
     this.fetchToken().then(_=>{
       // this.setNotifySocket()
-      this.notify=new WebSocketService()
-      let url=`ws://127.0.0.1:8000/ws/chat/notify?key=${this.token}`
-      this.notify.connect(url,(message)=>this.onNotify(message))
+      // this.notify=new WebSocketService()
+      // let url=`ws://127.0.0.1:8000/ws/chat/notify?key=${this.token}`
+      // this.notify.connect(url,(message)=>this.onNotify(message))
     })
 
   }

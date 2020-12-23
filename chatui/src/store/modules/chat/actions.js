@@ -10,12 +10,12 @@ export function fetchConversions({commit}) {
 }
 
 export function fetchToken({commit}) {
-    return axios.post('chat/token').then((response) => {
-        commit('setToken', response.data.key)
-        return response.data;
-    }).finally(() => {
-
-    })
+    // return axios.post('chat/token').then((response) => {
+    //     commit('setToken', response.data.key)
+    //     return response.data;
+    // }).finally(() => {
+    //
+    // })
 }
 
 export function setConversionSocket({commit,state,dispatch}) {
@@ -39,12 +39,12 @@ export function changeActiveConversions({commit},payload) {
 
 
 export function fetchAvailableContacts({commit}) {
-    return axios.get('chat/contacts/').then((response) => {
-        commit('setAvailableContacts', response.data)
-        return response.data;
-    }).finally(() => {
-
-    })
+    // return axios.get('chat/contacts/').then((response) => {
+    //     commit('setAvailableContacts', response.data)
+    //     return response.data;
+    // }).finally(() => {
+    //
+    // })
 }
 
 export function setNewContact({commit,state,dispatch},user) {

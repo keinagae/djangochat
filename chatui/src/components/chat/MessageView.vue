@@ -73,11 +73,11 @@ export default {
   methods: {
 
     subscribePusherPublicChannel() {
-      window.Echo.channel('public')
-          .listen('MessageSent', e => {
-            this.messages.push(e.message)
-            // this.scrollPageToLast()
-          })
+      // window.Echo.channel('public')
+      //     .listen('MessageSent', e => {
+      //       this.messages.push(e.message)
+      //       // this.scrollPageToLast()
+      //     })
     }
   }
 }

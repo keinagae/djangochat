@@ -8,11 +8,6 @@ import Wazo from '@wazo/sdk/lib/simple';
 export default {
   name: "App",
   methods:{
-    async login(){
-      let response= await Wazo.Auth.logIn("kei@kei.com","kei123")
-      console.log(response)
-      await Wazo.Room.connect({extension:12345,audio:true})
-    }
   },
   mounted() {
     // console.log(this.$store.getters['auth/isLoggedIn'])
@@ -24,6 +19,7 @@ export default {
           {name: "Home"}
       )
     }).catch((error) => {
+      console.log("error")
       localStorage.removeItem('auth_token')
       delete axios.defaults.headers.common.Authorization
       this.$router.replace(
